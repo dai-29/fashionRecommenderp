@@ -18,9 +18,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.title("🛍️ Fashion Recommendation System")
+st.title("🛍️ VogueVision")
 st.markdown("""
-Welcome to the **Fashion Recommendation System**!  
+Welcome to the **VogueVision**!  
 Upload an image of a fashion item, and this app will recommend similar items based on our advanced machine learning model.  
 Enjoy discovering your next favorite style! 😊
 """)
@@ -116,7 +116,7 @@ if uploaded_file is not None:
     uploaded_path = save_uploaded_file(uploaded_file)
     if uploaded_path:
         display_img = Image.open(uploaded_path)
-        st.image(display_img, caption="Uploaded Image", use_column_width=True)
+        st.image(display_img, caption="Uploaded Image", width=200)
 
         # Feature extraction and recommendation
         st.markdown("### Recommendations")
