@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import tensorflow
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.layers import GlobalMaxPooling2D
@@ -41,7 +41,7 @@ for file in tqdm(filenames):
 
 pickle.dump(feature_list,open('embeddings.pkl','wb'))
 pickle.dump(filenames,open('filenames.pkl','wb'))
-=======
+
 import tensorflow
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.layers import GlobalMaxPooling2D
@@ -84,4 +84,4 @@ for file in tqdm(filenames):
 
 pickle.dump(feature_list,open('embeddings.pkl','wb'))
 pickle.dump(filenames,open('filenames.pkl','wb'))
->>>>>>> 81b54be6dec34ff6c9dde931a6f197f278ed30c7
+
