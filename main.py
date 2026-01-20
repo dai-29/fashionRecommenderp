@@ -3,8 +3,8 @@ import os
 import numpy as np
 import pickle
 from numpy.linalg import norm
+import tensorflow
 from PIL import Image
-import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 from tensorflow.keras.layers import GlobalMaxPooling2D
 from tensorflow.keras.preprocessing import image
@@ -29,14 +29,18 @@ Enjoy discovering your next favorite style! 😊
 # Current directory
 current_dir = os.path.dirname(__file__)
 
-# Load embeddings and filenames
+# Load pre-trained model and data
 feature_list = np.array(pickle.load(open(os.path.join(current_dir, 'embeddings.pkl'), 'rb')))
-filenames = pickle.load(open(os.path.join(current_dir, 'filenames.pkl'), 'rb'))  # should contain 'images/1541.jpg' etc
+filenames = pickle.load(open(os.path.join(current_dir, 'filenames.pkl'), 'rb'))
 
-# Load model
-base_model = ResNet50(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
-base_model.trainable = False
-model = tf.keras.Sequential([base_model, GlobalMaxPooling2D()])
+# ------------------------------
+# Convert Windows backslashes to Linux forward slashes
+filenames = [f.replace("\\", "/") for f in filenames]
+
+# Load ResNet50 model
+model = ResNet50(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+model.trainable = False
+model = tensorflow.keras.Sequential([model, GlobalMaxPooling2D()])
 
 # ------------------------------
 # Functions
@@ -49,19 +53,23 @@ def extract_features(img_path, model):
     normalized_result = result / norm(result)
     return normalized_result
 
-def recommend(features, feature_list, n=5):
-    neighbors = NearestNeighbors(n_neighbors=n+1, algorithm='brute', metric='euclidean')
+def recommend(features, feature_list):
+    neighbors = NearestNeighbors(n_neighbors=6, algorithm='brute', metric='euclidean')
     neighbors.fit(feature_list)
     distances, indices = neighbors.kneighbors([features])
-    return indices[0][1:]  # skip the uploaded image itself
+    return indices
 
 def save_uploaded_file(uploaded_file):
-    uploads_dir = os.path.join(current_dir, "uploads")
-    os.makedirs(uploads_dir, exist_ok=True)
-    uploaded_path = os.path.join(uploads_dir, uploaded_file.name)
-    with open(uploaded_path, "wb") as f:
-        f.write(uploaded_file.getbuffer())
-    return uploaded_path
+    try:
+        uploads_dir = os.path.join(current_dir, "uploads")
+        os.makedirs(uploads_dir, exist_ok=True)
+        uploaded_path = os.path.join(uploads_dir, uploaded_file.name)
+        with open(uploaded_path, 'wb') as f:
+            f.write(uploaded_file.getbuffer())
+        return uploaded_path
+    except Exception as e:
+        print(e)
+        return None
 
 # ------------------------------
 # Sidebar
@@ -85,27 +93,33 @@ uploaded_file = st.file_uploader(
     key="user_upload"
 )
 
-if uploaded_file:
+if uploaded_file is not None:
     uploaded_path = save_uploaded_file(uploaded_file)
-    display_img = Image.open(uploaded_path)
-    st.image(display_img, caption="Uploaded Image", use_column_width=True)
+    if uploaded_path:
+        display_img = Image.open(uploaded_path)
+        st.image(display_img, caption="Uploaded Image", use_column_width=True)
 
-    st.markdown("### Recommendations")
-    with st.spinner("Analyzing your image and fetching recommendations..."):
-        features = extract_features(uploaded_path, model)
-        indices = recommend(features, feature_list, n=5)
-        st.success("Here are your recommendations:")
+        # Feature extraction and recommendation
+        st.markdown("### Recommendations")
+        with st.spinner("Analyzing your image and fetching recommendations..."):
+            features = extract_features(uploaded_path, model)
+            indices = recommend(features, feature_list)
+            st.success("Here are your recommendations:")
 
-    st.markdown("#### Similar Items:")
-    cols = st.columns(5)
-    for i, col in enumerate(cols):
-        with col:
-            recommended_img_path = os.path.join(current_dir, filenames[indices[i]])
-            if os.path.exists(recommended_img_path):
-                rec_img = Image.open(recommended_img_path)
-                st.image(rec_img, use_column_width=True)
-            else:
-                st.warning(f"Image not found: {filenames[indices[i]]}")
+        # Display recommendations in a grid
+        st.markdown("#### Similar Items:")
+        cols = st.columns(5)
+        for i, col in enumerate(cols):
+            with col:
+                recommended_img_path = os.path.join(current_dir, filenames[indices[0][i]])
+                # Check if file exists
+                if os.path.exists(recommended_img_path):
+                    recommended_img = Image.open(recommended_img_path)
+                    st.image(recommended_img, use_column_width=True)
+                else:
+                    st.warning(f"Image not found: {filenames[indices[0][i]]}")
+    else:
+        st.error("Error uploading your image. Please try again.")
 
 # ------------------------------
 # Footer
