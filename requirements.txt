@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 streamlit
 tensorflow
 keras
@@ -5,3 +6,12 @@ numpy
 pillow
 scikit-learn
 opencv-python
+=======
+streamlit
+tensorflow
+keras
+numpy
+pillow
+scikit-learn
+opencv-python
+>>>>>>> 81b54be6dec34ff6c9dde931a6f197f278ed30c7
