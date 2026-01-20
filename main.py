@@ -82,10 +82,12 @@ For any queries or feedback, feel free to reach out:
 📧 **[anubhavpatwal2929@gmail.com](mailto:anubhavpatwal2929@gmail.com)**
 """)
 st.sidebar.markdown("""**Note:**""")
-st.sidebar.markdown("""Respected Sir,
-This demo uses 3 sample images. The full dataset contains 44k images and requires cloud deployment like AWS.
-Kindly use the sample images to explore the recommendations. 
-If needed, I will deploy the full dataset on cloud as well.""")
+st.sidebar.markdown("""
+Respected Sir,<br> This demo uses 3 sample images.
+The full dataset contains 44k images and requires cloud deployment like AWS.<br>
+Kindly use the sample images to explore the recommendations.<br>
+If needed, I will deploy the full dataset on cloud as well.
+""", unsafe_allow_html=True)
 
 # ------------------------------
 # Sample images section
