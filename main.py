@@ -81,6 +81,9 @@ st.sidebar.info("""
 For any queries or feedback, feel free to reach out:  
 📧 **[anubhavpatwal2929@gmail.com](mailto:anubhavpatwal2929@gmail.com)**
 """)
+st.sidebar.markdown("""**Note:** Respected Sir - This demo uses 3 sample images only.  
+The full dataset is 44k images (~10GB) and cannot be hosted here at the moment.  
+Try uploading the sample images below to see the recommendations. """)
 
 # ------------------------------
 # Sample images section
