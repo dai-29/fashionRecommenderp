@@ -87,8 +87,8 @@ For any queries or feedback, feel free to reach out:
 st.markdown("### Try Sample Images")
 sample_images = {
     "Shoes": "images/1541.jpg",
-    "Kurti": "images/1542.jpg",
-    "Lower": "images/1543.jpg"
+    "Kurti": "images/22759.jpg",
+    "Lower": "images/2111.jpg"
 }
 
 cols = st.columns(len(sample_images))
