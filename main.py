@@ -31,7 +31,7 @@ current_dir = os.path.dirname(__file__)
 
 # Load pre-trained model and data
 feature_list = np.array(pickle.load(open(os.path.join(current_dir, 'embeddings.pkl'), 'rb')))
-filenames = pickle.load(open(os.path.join(current_dir, 'filenames.pkl'), 'rb'))
+filenames = pickle.load(open(os.path.join(current_dir, 'filenames.pkl'), 'rb'))  # relative paths
 
 model = ResNet50(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 model.trainable = False
