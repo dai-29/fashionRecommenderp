@@ -6,7 +6,7 @@ numpy
 pillow
 scikit-learn
 opencv-python
-=======
+
 streamlit
 tensorflow
 keras
