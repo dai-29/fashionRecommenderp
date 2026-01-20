@@ -94,7 +94,7 @@ sample_images = {
 cols = st.columns(len(sample_images))
 for i, (name, path) in enumerate(sample_images.items()):
     with cols[i]:
-        st.image(os.path.join(current_dir, path), caption=name, use_column_width=True)
+        st.image(os.path.join(current_dir, path), caption=name, width=300)
         with open(os.path.join(current_dir, path), "rb") as file:
             st.download_button(
                 label=f"Download {name}",
