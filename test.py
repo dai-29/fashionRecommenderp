@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import pickle
 
 import cv2
@@ -82,5 +82,4 @@ print(indices)
 for file in indices [0][1:6]:
     temp_img = cv2.imread(filenames[file])
     cv2.imshow('output',cv2.resize(temp_img, (206,206)))
->>>>>>> 81b54be6dec34ff6c9dde931a6f197f278ed30c7
     cv2.waitKey(0)
