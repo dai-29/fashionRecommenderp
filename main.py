@@ -33,11 +33,9 @@ current_dir = os.path.dirname(__file__)
 feature_list = np.array(pickle.load(open(os.path.join(current_dir, 'embeddings.pkl'), 'rb')))
 filenames = pickle.load(open(os.path.join(current_dir, 'filenames.pkl'), 'rb'))
 
-# ------------------------------
-# Convert Windows backslashes to Linux forward slashes
+# Convert all paths to forward slashes for Streamlit
 filenames = [f.replace("\\", "/") for f in filenames]
 
-# Load ResNet50 model
 model = ResNet50(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 model.trainable = False
 model = tensorflow.keras.Sequential([model, GlobalMaxPooling2D()])
@@ -85,6 +83,27 @@ For any queries or feedback, feel free to reach out:
 """)
 
 # ------------------------------
+# Sample images section
+st.markdown("### Try Sample Images")
+sample_images = {
+    "Shoes": "images/1541.jpg",
+    "Kurti": "images/1542.jpg",
+    "Lower": "images/1543.jpg"
+}
+
+cols = st.columns(len(sample_images))
+for i, (name, path) in enumerate(sample_images.items()):
+    with cols[i]:
+        st.image(os.path.join(current_dir, path), caption=name, use_column_width=True)
+        with open(os.path.join(current_dir, path), "rb") as file:
+            st.download_button(
+                label=f"Download {name}",
+                data=file,
+                file_name=os.path.basename(path),
+                mime="image/jpeg"
+            )
+
+# ------------------------------
 # File upload section
 st.markdown("### Upload Your Fashion Image")
 uploaded_file = st.file_uploader(
@@ -112,12 +131,10 @@ if uploaded_file is not None:
         for i, col in enumerate(cols):
             with col:
                 recommended_img_path = os.path.join(current_dir, filenames[indices[0][i]])
-                # Check if file exists
                 if os.path.exists(recommended_img_path):
-                    recommended_img = Image.open(recommended_img_path)
-                    st.image(recommended_img, use_column_width=True)
+                    st.image(recommended_img_path, use_column_width=True)
                 else:
-                    st.warning(f"Image not found: {filenames[indices[0][i]]}")
+                    st.error(f"Image not found: {recommended_img_path}")
     else:
         st.error("Error uploading your image. Please try again.")
 
