@@ -18,7 +18,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.title("🛍️ Fashion Recommendation System")
+st.title("🛍️ VogueVision")
 st.markdown("""
 Welcome to the **Fashion Recommendation System**!  
 Upload an image of a fashion item, and this app will recommend similar items based on our advanced machine learning model.  
