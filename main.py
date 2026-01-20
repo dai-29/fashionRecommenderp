@@ -11,9 +11,9 @@ from tensorflow.keras.preprocessing import image
 from sklearn.neighbors import NearestNeighbors
 
 # ------------------------------
-# Set up page
+# Page setup
 st.set_page_config(
-    page_title="Fashion Recommendation System",
+    page_title="VogueVision!",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -31,7 +31,7 @@ current_dir = os.path.dirname(__file__)
 
 # Load pre-trained model and data
 feature_list = np.array(pickle.load(open(os.path.join(current_dir, 'embeddings.pkl'), 'rb')))
-filenames = pickle.load(open(os.path.join(current_dir, 'filenames.pkl'), 'rb'))  # relative paths
+filenames = pickle.load(open(os.path.join(current_dir, 'filenames.pkl'), 'rb'))
 
 model = ResNet50(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 model.trainable = False
@@ -106,8 +106,10 @@ if uploaded_file is not None:
         cols = st.columns(5)
         for i, col in enumerate(cols):
             with col:
-                img_path = os.path.join(current_dir, filenames[indices[0][i]])
-                st.image(img_path, use_column_width=True)
+                # Open image as PIL and pass to st.image directly
+                recommended_img_path = os.path.join(current_dir, filenames[indices[0][i]])
+                recommended_img = Image.open(recommended_img_path)
+                st.image(recommended_img, use_column_width=True)
     else:
         st.error("Error uploading your image. Please try again.")
 
