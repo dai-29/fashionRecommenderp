@@ -7,11 +7,4 @@ pillow
 scikit-learn
 opencv-python
 
-streamlit
-tensorflow
-keras
-numpy
-pillow
-scikit-learn
-opencv-python
 
