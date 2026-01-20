@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import streamlit as st
 import os
 import numpy as np
@@ -208,4 +208,3 @@ Powered by Python, TensorFlow, and Streamlit.
 
 
 
->>>>>>> 81b54be6dec34ff6c9dde931a6f197f278ed30c7
