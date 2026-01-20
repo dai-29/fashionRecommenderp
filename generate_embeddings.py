@@ -1,7 +1,7 @@
 import os
 import pickle
 import numpy as np
-<<<<<<< HEAD
+
 from tqdm import tqdm
 from numpy.linalg import norm
 
@@ -26,7 +26,7 @@ filenames = [os.path.join(img_folder, f) for f in os.listdir(img_folder) if f.en
 # Extract features for all images
 feature_list = []
 print("⏳ Extracting features from images...")
-=======
+
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.layers import GlobalMaxPooling2D
@@ -48,7 +48,6 @@ filenames = [os.path.join(img_folder, f) for f in os.listdir(img_folder) if f.en
 
 # Extract features
 feature_list = []
->>>>>>> 81b54be6dec34ff6c9dde931a6f197f278ed30c7
 for file in tqdm(filenames):
     img = image.load_img(file, target_size=(224,224))
     img_array = image.img_to_array(img)
@@ -58,11 +57,11 @@ for file in tqdm(filenames):
     normalized = result / norm(result)
     feature_list.append(normalized)
 
-<<<<<<< HEAD
+
 # Save embeddings and filenames
-=======
+
 # Save embeddings
->>>>>>> 81b54be6dec34ff6c9dde931a6f197f278ed30c7
+
 pickle.dump(np.array(feature_list), open('embeddings.pkl','wb'))
 pickle.dump(filenames, open('filenames.pkl','wb'))
 
