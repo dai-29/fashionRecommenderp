@@ -94,7 +94,7 @@ sample_images = {
 cols = st.columns(len(sample_images))
 for i, (name, path) in enumerate(sample_images.items()):
     with cols[i]:
-        st.image(os.path.join(current_dir, path), caption=name, width=300)
+        st.image(os.path.join(current_dir, path), caption=name, width=200)
         with open(os.path.join(current_dir, path), "rb") as file:
             st.download_button(
                 label=f"Download {name}",
@@ -132,7 +132,7 @@ if uploaded_file is not None:
             with col:
                 recommended_img_path = os.path.join(current_dir, filenames[indices[0][i]])
                 if os.path.exists(recommended_img_path):
-                    st.image(recommended_img_path, use_column_width=True)
+                    st.image(recommended_img_path, width=150)
                 else:
                     st.error(f"Image not found: {recommended_img_path}")
     else:
